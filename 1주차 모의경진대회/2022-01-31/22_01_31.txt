@@ -1,0 +1,20 @@
+threshold를 0.43으로 수정했는데,
+오히려 점수가 떨어졌다.
+현재 까지 가장 좋은 threshold는 0.42이다.(0.4보다 좋음)
+현재 모델 
+rnd_clf = RandomForestClassifier(max_depth = 20)
+xgb_clf = xgboost.XGBClassifier(max_depth = 6,
+                                n_estimators = 100,
+                                eval_metric='mlogloss')
+lgbm_clf = LGBMClassifier(max_depth=10,
+                                  num_leaves =120)
+
+
+stacking_clf = StackingClassifier(estimators=[('rnd', rnd_clf),('lgbm', lgbm_clf), ('xgb', xgb_clf)], final_estimator = LGBMClassifier(), stack_method = 'predict_proba')
+stacking_clf.fit(X_train, y_train)
+
+y_pred_stack = stacking_clf.predict(X_valid)
+y_pred_prob = stacking_clf.predict_proba(X_valid)
+
+# ensemble(stacking) 성능 확인
+get_clf_eval(y_valid, y_pred_stack)
