@@ -1,6 +1,6 @@
 threshold를 0.43으로 수정했는데,
 오히려 점수가 떨어졌다.
-현재 까지 가장 좋은 threshold는 0.42이다.(0.4보다 좋음)
+현재 까지 가장 좋은 threshold는 0.42이다.(0.4, 0.38보다 좋음)
 현재 모델 
 rnd_clf = RandomForestClassifier(max_depth = 20)
 xgb_clf = xgboost.XGBClassifier(max_depth = 6,
@@ -18,3 +18,21 @@ y_pred_prob = stacking_clf.predict_proba(X_valid)
 
 # ensemble(stacking) 성능 확인
 get_clf_eval(y_valid, y_pred_stack)
+
+
+기본 모델(threshold = 0.5)
+
+정확도: 0.7543
+정밀도: 0.6638
+재현율: 0.4893
+AUC: 0.6853
+F1: 0.5633
+
+
+threshold : 0.4
+
+정확도: 0.7441
+정밀도: 0.5921
+재현율: 0.6756
+AUC: 0.7263
+F1: 0.6311
